@@ -5,6 +5,7 @@ determinarGanador():
 Utiliza la librería readline-sync para pedir al usuario el número de participantes, luego solicita las puntuaciones de cada uno de ellos y usa la función calcularPuntaje para determinar el pastel con el mayor puntaje.
 Y si hay un empate? 🤔 En ese caso, informa que hubo un empate entre los participantes que corresponda. */
 import * as rs from "readline-sync";
+let empate = 0
 let puntuacionDeEmpate = 0
 let calcularPuntaje = (num1: number, num2: number, num3: number): number => {
     let total: number
@@ -33,18 +34,19 @@ let determinarGanador = (num1: number, num2: number, num3: number): string => {
             if (calcularPuntaje(num1, num2, num3) == 0) {
                 i--
             } else if (calcularPuntaje(num1, num2, num3) > puntuacionMayor) {
+                puntuacionMayor = calcularPuntaje(num1, num2, num3)
                 ganador = `El ganador es el participante ${i}.`
             } else if (calcularPuntaje(num1, num2, num3) == puntuacionMayor) {
-                puntuacionDeEmpate = calcularPuntaje(num1, num2, num3)
+                empate = 1
+                puntuacionDeEmpate = puntuacionMayor
             }
         }
     }
     return ganador
 }
 
-
 let ganador = determinarGanador(0, 0, 0)
-if (puntuacionDeEmpate !== 0) {
-    console.log(`Hubo un empate entre los pasteles con ${puntuacionDeEmpate} de puntaje total.`)
+if (empate == 1) {
+    console.log(`Hubo empate entre las tortas con ${puntuacionDeEmpate} de puntaje total.`)
 }
-console.log(ganador);
+console.log(ganador)
